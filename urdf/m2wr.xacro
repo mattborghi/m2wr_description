@@ -1,5 +1,14 @@
 <?xml version="1.0" ?>
- 
+
+<!-- 
+  http://wiki.ros.org/urdf/XML
+
+  In this xacro file we have defined the following:
+    chasis + caster wheel : link type element
+    wheels : link type elements (left + right)
+    joints : joint type elements (left + right) 
+--> 
+
 <robot name="m2wr" xmlns:xacro="https://www.ros.org/wiki/xacro" >
   <!-- Define used colors -->
   <material name="black">
@@ -36,23 +45,30 @@
   <gazebo reference="link_right_wheel">
     <material>Gazebo/Blue</material>
   </gazebo>
-    
+  
+  <!-- Defining link chassis -->
   <link name="link_chassis">
     <!-- pose and inertial -->
     <pose>0 0 0.1 0 0 0</pose>
-    
+  <!--  
+    All of these elements have some common properties like inertial, collision and visual. 
+
+    The inertial and collision properties enable physics simulation and the visual property controls the appearance of the robot.
+  -->
+
+    <!-- Inertial properties -->
     <inertial>
       <mass value="5"/>
       <origin rpy="0 0 0" xyz="0 0 0.1"/>
       <inertia ixx="0.0395416666667" ixy="0" ixz="0" iyy="0.106208333333" iyz="0" izz="0.106208333333"/>
     </inertial>
-    
+    <!-- Collision properties -->
     <collision name="collision_chassis">
       <geometry>
         <box size="0.5 0.3 0.07"/>
       </geometry>
     </collision>
-    
+    <!-- Visual properties -->
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0"/>
       <geometry>
@@ -146,6 +162,9 @@
     
   </link>
     
+  <!--
+    The joints help in defining the relative motion between links such as the motion of wheel with respect to the chassis. The wheels are links of cylindrical geometry, they are oriented (using rpy property) such that rolling is possible. The placement is controlled via the xyz property. For joints, we have specified the values for damping and friction as well.  
+  -->
   <!--   Joint for right wheel  -->
   <joint name="joint_left_wheel" type="continuous">
     <origin rpy="0 0 0" xyz="-0.05 -0.15 0"/>
