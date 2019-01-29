@@ -29,6 +29,11 @@ $ roslaunch gazebo_ros empty_world.launch
 $ roslaunch m2wr_description spawn.launch 
 ```
 
+* Run the following code in order to control the robot using the keyboard:
+```sh
+$ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+```
+
 [Part 2](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part2)
 
 We are going to explore the macros for URDF files, using XACRO files and we will have the same model organized in different files, in a organized way.

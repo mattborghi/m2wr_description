@@ -10,41 +10,10 @@
 --> 
 
 <robot name="m2wr" xmlns:xacro="https://www.ros.org/wiki/xacro" >
-  <!-- Define used colors -->
-  <material name="black">
-    <color rgba="0.0 0.0 0.0 1.0"/>
-  </material>
-  <material name="blue">
-    <color rgba="0.203125 0.23828125 0.28515625 1.0"/>
-  </material>
-  <material name="green">
-    <color rgba="0.0 0.8 0.0 1.0"/>
-  </material>
-  <material name="grey">
-    <color rgba="0.2 0.2 0.2 1.0"/>
-  </material>
-  <material name="orange">
-    <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
-  </material>
-  <material name="brown">
-    <color rgba="0.870588235294 0.811764705882 0.764705882353 1.0"/>
-  </material>
-  <material name="red">
-    <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
-  </material>
-  <material name="white">
-    <color rgba="1.0 1.0 1.0 1.0"/>
-  </material>  
-  <!-- Define color for robot parts -->
-  <gazebo reference="link_chassis">
-    <material>Gazebo/Orange</material>
-  </gazebo>
-  <gazebo reference="link_left_wheel">
-    <material>Gazebo/Blue</material>
-  </gazebo>
-  <gazebo reference="link_right_wheel">
-    <material>Gazebo/Blue</material>
-  </gazebo>
+  
+  <xacro:include filename="$(find m2wr_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find m2wr_description)/urdf/gazebo.xacro" />
+  <xacro:include filename="$(find m2wr_description)/urdf/macro.xacro" />
   
   <!-- Defining link chassis -->
   <link name="link_chassis">
@@ -102,96 +71,18 @@
     </visual>
     </link>
   
-  <!-- Create wheel right -->  
-    
-  <link name="link_right_wheel">    
-    <inertial>
-      <mass value="0.2"/>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>
-    </inertial>
-    
-    <collision name="link_right_wheel_collision">
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0" />
-      <geometry>
-        <cylinder length="0.04" radius="0.1"/>
-      </geometry>
-    </collision>
-    
-    <visual name="link_right_wheel_visual">
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.04" radius="0.1"/>
-      </geometry>      
-    </visual>
-    
-  </link>
-    
-  <!--   Joint for right wheel  -->
-  <joint name="joint_right_wheel" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.05 0.15 0"/>
-    <child link="link_right_wheel" />
-    <parent link="link_chassis"/>
-    <axis rpy="0 0 0" xyz="0 1 0"/>
-    <limit effort="10000" velocity="1000"/>
-    <joint_properties damping="1.0" friction="1.0" />
-  </joint>  
-    
-  <!-- Left Wheel link -->
-    
-  <link name="link_left_wheel">    
-    <inertial>
-      <mass value="0.2"/>
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <inertia ixx="0.00052666666" ixy="0" ixz="0" iyy="0.00052666666" iyz="0" izz="0.001"/>
-    </inertial>
-    
-    <collision name="link_left_wheel_collision">
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0" />
-      <geometry>
-        <cylinder length="0.04" radius="0.1"/>
-      </geometry>
-    </collision>
-    
-    <visual name="link_left_wheel_visual">
-      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
-      <geometry>
-        <cylinder length="0.04" radius="0.1"/>
-      </geometry>      
-    </visual>
-    
-  </link>
+  <!-- 
+    Replace the wheel links with the following lines for macros:
+  -->
+  <xacro:link_wheel name="link_right_wheel" />
+  <xacro:link_wheel name="link_left_wheel" />    
     
   <!--
     The joints help in defining the relative motion between links such as the motion of wheel with respect to the chassis. The wheels are links of cylindrical geometry, they are oriented (using rpy property) such that rolling is possible. The placement is controlled via the xyz property. For joints, we have specified the values for damping and friction as well.  
+
+    Both wheels joints are replaced with the following two lines:
   -->
-  <!--   Joint for right wheel  -->
-  <joint name="joint_left_wheel" type="continuous">
-    <origin rpy="0 0 0" xyz="-0.05 -0.15 0"/>
-    <child link="link_left_wheel" />
-    <parent link="link_chassis"/>
-    <axis rpy="0 0 0" xyz="0 1 0"/>
-    <limit effort="10000" velocity="1000"/>
-    <joint_properties damping="1.0" friction="1.0" />
-  </joint>    
-  
-  <!-- 
-    Now we are ready to add control to our robot. We will add a new element called plugin to our xacro file. We will add a differential drive plugin to our robot. The new tag looks like follows:
-  -->
-  <gazebo>
-    <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
-      <alwaysOn>true</alwaysOn>
-      <updateRate>20</updateRate>
-      <leftJoint>joint_left_wheel</leftJoint>
-      <rightJoint>joint_right_wheel</rightJoint>
-      <wheelSeparation>0.4</wheelSeparation>
-      <wheelDiameter>0.2</wheelDiameter>
-      <torque>0.1</torque>
-      <commandTopic>cmd_vel</commandTopic>
-      <odometryTopic>odom</odometryTopic>
-      <odometryFrame>odom</odometryFrame>
-      <robotBaseFrame>link_chassis</robotBaseFrame>
-    </plugin>
-  </gazebo>
+  <xacro:joint_wheel name="joint_right_wheel"  child="link_right_wheel"  origin_xyz="-0.05 0.15 0"  />
+  <xacro:joint_wheel name="joint_left_wheel"   child="link_left_wheel"   origin_xyz="-0.05 -0.15 0"  />
 
 </robot>

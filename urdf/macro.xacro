@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!-- 
+  we will use macros, which are like functions, to reduce the remaining code in m2wr.xacro file.
+-->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!--
+      we have defined two macros, their purpose is to take parameters and create the required element (link element).
+
+      The first macro is named link_wheel and it accepts only one parameter name. It creates a wheel link with the name passed in the parameter. 
+    -->
+    <xacro:macro name="link_wheel" params="name">
+        <link name="${name}">
+            <inertial>
+              <mass value="0.2"/>
+              <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+            </inertial>
+            <collision name="link_right_wheel_collision">
+              <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <geometry>
+                <cylinder length="0.04" radius="0.1"/>
+              </geometry>
+            </collision>
+            <visual name="${name}_visual">
+              <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+              <geometry>
+                <cylinder length="0.04" radius="0.1"/>
+              </geometry>
+            </visual>
+        </link>
+    </xacro:macro>
+
+    <!--
+      The second macro accepts three parameters name, child and origin_xyz and it creates a joint link.
+    -->
+    <xacro:macro name="joint_wheel" params="name child origin_xyz">
+      <joint name="${name}" type="continuous">
+        <origin rpy="0 0 0" xyz="${origin_xyz}"/>
+        <child link="${child}"/>
+        <parent link="link_chassis"/>
+        <axis rpy="0 0 0" xyz="0 1 0"/>
+        <limit effort="10000" velocity="1000"/>
+        <joint_properties damping="1.0" friction="1.0"/>
+      </joint>
+    </xacro:macro>
+</robot>
