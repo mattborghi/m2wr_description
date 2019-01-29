@@ -54,9 +54,12 @@ We will modify the urdf file (m2wr.xacro) as follows:
 
 * Having aded object in front of the robot in gazebo, open rviz and do the following:
 
-1. After starting rviz open the Graphical Tools window. Once rviz window loads you need to do the following settings
-2. Select odom in the Fixed Frame field (see the image below)
-3. Add two new displays using the Add button on the left bottom of rviz screen. The first display should be RobotModel and the other should be LaserScan
-4. Expand the LaserScan display by double clicking on its name and choose Topic as /m2wr/laser/scan
+	1. After starting rviz open the Graphical Tools window. Once rviz window loads you need to do the following settings
+
+	2. Select odom in the Fixed Frame field (see the image below)
+	
+	3. Add two new displays using the Add button on the left bottom of rviz screen. The first display should be RobotModel and the other should be LaserScan
+	
+	4. Expand the LaserScan display by double clicking on its name and choose Topic as /m2wr/laser/scan
 
 * Then move the robot and rviz should mark the sensor detecting this objects.
