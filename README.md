@@ -1,6 +1,6 @@
 ## ROS Tutorials: Exploring ROS using a 2 wheeled Robot
 
-[Part 1](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/)
+### [Part 1: Explore the basics of robot modeling using the URDF](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/)
 
 We are going to explore the basics of robot modeling using the Unified Robot Description Format (URDF) and we will have a model ready and running in Gazebo simulator.
 
@@ -34,9 +34,29 @@ $ roslaunch m2wr_description spawn.launch
 $ rosrun teleop_twist_keyboard teleop_twist_keyboard.py
 ```
 
-[Part 2](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part2)
+### [Part 2: Explore the macros for URDF files using XACRO files](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part2)
 
 We are going to explore the macros for URDF files, using XACRO files and we will have the same model organized in different files, in a organized way.
 
+### [Part 3: Insert a laser scan sensor to the robot](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part3)
 
+We are going to insert a laser scan sensor to a 2 wheeled robot the robot.
 
+We will modify the urdf file (m2wr.xacro) as follows:
+
+* Add a link element to our robot. This link will be cylindrical in shape and will represent the sensor.
+
+* Add a joint element to our robot. This will connect the sensor to robot body rigidly.
+
+* Define a new macro to calculate the inertial property of a cylinder using its dimensions (length and radius).
+
+* Finally a laser scan sensor plugin element will add sensing ability to the link that we created (the cylinder representing the sensor).
+
+* Having aded object in front of the robot in gazebo, open rviz and do the following:
+
+1. After starting rviz open the Graphical Tools window. Once rviz window loads you need to do the following settings
+2. Select odom in the Fixed Frame field (see the image below)
+3. Add two new displays using the Add button on the left bottom of rviz screen. The first display should be RobotModel and the other should be LaserScan
+4. Expand the LaserScan display by double clicking on its name and choose Topic as /m2wr/laser/scan
+
+* Then move the robot and rviz should mark the sensor detecting this objects.
