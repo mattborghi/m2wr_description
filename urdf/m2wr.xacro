@@ -134,6 +134,8 @@
     noise : This parameter lets us add gaussian noise to the range data captured by the sensor
     topicName : Defines the name which is used for publishing the laser data
     frameName : Defines the link to which the plugin has to be applied
+
+    see: http://gazebosim.org/tutorials?tut=ros_gzplugins#GPULaser for more information
   -->
   <gazebo reference="sensor_laser">
     <sensor type="ray" name="head_hokuyo_sensor">
