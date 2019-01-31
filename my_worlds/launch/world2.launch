@@ -14,7 +14,9 @@
     <arg name="paused" value="$(arg pause)"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="headless" value="$(arg headless)"/>
-    <env name="GAZEBO_MODEL_PATH" value="$(find simulation_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+    <!--
+      <env name="GAZEBO_MODEL_PATH" value="$(find simulation_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+    -->
   </include>
 <!--  Include launch.xml if needed -->
 </launch>

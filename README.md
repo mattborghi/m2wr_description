@@ -117,3 +117,47 @@ $ roslaunch m2wr_description spawn.launch
 $ rosrun motion_plan reading_laser.py
 ```
 
+[Part 5: An obstacle avoidance algorithm](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part5)
+
+An obstacle avoidance algorithm will be explained.
+
+Clone the following repository:
+
+```sh
+$ cd catkin_ws/src
+
+$ git clone https://marcoarruda@bitbucket.org/theconstructcore/two-wheeled-robot-motion-planning.git
+```
+Launch the world02 scenario:
+
+```sh
+$ roslaunch my_worlds world2.launch
+```
+![](img/sensor.png)
+
+To test the obstacle avoidance algorithm, spawn the robot into the world, as before and run the script:
+```sh
+$ rosrun motion_plan obstacle_avoidance.py
+```
+
+You can change various settings like speed of robot, sensing distance etc and see how it works.
+
+[Part 6: Create an algorithm to go from a point to another](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part6)
+
+We are going create an algorithm to go from a point to another using the odometry data to localize the robot.
+
+
+
+[Part 7: Work with wall following robot algorithm](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part7)
+
+[Part 8: Work with the Bug 0 algorithm](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part8)
+
+[Part 9: See the Bug 0 Foil](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part9)
+
+[Part 10: Perform the motion planning task Bug 1](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part10)
+
+[Part 11: From ROS Indigo to Kinetic](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part11)
+
+[Part 12: Implement code for Bug 2 behavior](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part12)
+
+[Part 13: Use ROS GMapping in our 2 wheeled robot](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part13)
