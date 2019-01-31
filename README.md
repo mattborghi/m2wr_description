@@ -146,7 +146,23 @@ You can change various settings like speed of robot, sensing distance etc and se
 
 We are going create an algorithm to go from a point to another using the odometry data to localize the robot.
 
+We will use the concept of state machines to implement the navigation logic. In a state machine there are finite number of states that represent the current situation (or behavior) of the system. In our case, we have three states:
 
+* Fix Heading: Denotes the state when robot heading differs from the desired heading by more than a threshold (represented by ```yaw_precision_``` in code)
+
+* Go Straight: Denotes the state when robot has correct heading but is away from the desired point by a distance greater than some threshold ( represented by ```dist_precision_``` in code)
+
+* Done: Denotes the state when robot has correct heading and has reached the destination.
+
+The robot can be in any one state at a time and can switch to other states as different conditions arise. This is depicted by the following state transition diagram
+
+![](img/diagram.png)
+
+As made before, given that the world2 is already loaded, spawn the robot into the scenario and run the obstacle avoidance script:
+
+```sh
+$ rosrun motion_plan obstacle_avoidance.py
+```
 
 [Part 7: Work with wall following robot algorithm](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part7)
 

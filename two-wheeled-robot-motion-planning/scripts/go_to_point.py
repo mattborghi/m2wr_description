@@ -40,6 +40,13 @@ def go_to_point_switch(req):
 
 # callbacks
 def clbk_odom(msg):
+    '''
+    This is a callback function for the Subscriber defined in main. 
+    This function receives the odometry data and 
+    extracts the position and yaw information. 
+    The odometry data encodes orientation information in quaternions. 
+    To obtain yaws the quaternion is converted into euler angles
+    '''
     global position_
     global yaw_
     
@@ -56,6 +63,9 @@ def clbk_odom(msg):
     yaw_ = euler[2]
 
 def change_state(state):
+    '''
+    This function changes the value of the global state variable that stores the robot state information.
+    '''
     global state_
     state_ = state
     print 'State changed to [%s]' % state_
@@ -66,6 +76,11 @@ def normalize_angle(angle):
     return angle
 
 def fix_yaw(des_pos):
+    '''
+    This function is executed when robot is in state 0 (Fix heading). 
+    First the current heading of the robot is checked with desired heading. 
+    If the differene in heading is more than a threshold the robot is commanded to turn in its place.
+    '''
     global yaw_, pub, yaw_precision_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = normalize_angle(desired_yaw - yaw_)
@@ -84,6 +99,17 @@ def fix_yaw(des_pos):
         change_state(1)
 
 def go_straight_ahead(des_pos):
+    '''
+    This function is executed when robot is in state 1 (Go Straight). 
+    This state occurs after robot has fixed the error in yaw. 
+    In this state, the distance between the robots current position 
+    and desired position is compared with a threshold. 
+    If robot is further away from desired position it is 
+    commanded to move forward. 
+    If the current position lies closer to the desired position 
+    then the yaw is again checked for error, 
+    if yaw is significantly different from the desired yaw value the robot goes to state 0.
+    '''
     global yaw_, pub, yaw_precision_, state_
     desired_yaw = math.atan2(des_pos.y - position_.y, des_pos.x - position_.x)
     err_yaw = desired_yaw - yaw_
@@ -104,12 +130,24 @@ def go_straight_ahead(des_pos):
         change_state(0)
 
 def done():
+    '''
+    Eventually robot achieves correct heading and correct position. Once in this state the robot stops.
+    '''
     twist_msg = Twist()
     twist_msg.linear.x = 0
     twist_msg.angular.z = 0
     pub.publish(twist_msg)
 
 def main():
+    '''
+        This is the entry point of the file. 
+        This function sets up a Subscriber to 
+        the odometry topic /odom and a 
+        Publisher to /cmd_vel topic to 
+        command velocity of the robot. 
+        Further this function processes the state 
+        machine depending on the value of state variable.
+    '''
     global pub, active_
     
     rospy.init_node('go_to_point')
