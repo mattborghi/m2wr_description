@@ -81,6 +81,12 @@ The 'my_worlds' package consists of the following directories:
 
 	2.	worlds : Contains multiple world description files.
 
+We can run the world1 in Gazebo by writing:
+
+```sh
+$ roslaunch my_worlds world1.launch
+```
+
 Create a new catkin package named ```motion_plan``` with dependencies ```rospy```, ```std_msgs```, ```geometry_msgs``` and ```sensor_msgs```. Write the following commands:
 
 ```sh
@@ -95,4 +101,19 @@ $ mkdir scripts
 $ touch scripts/reading_laser.py
 ```
 
+This reading_laser file will read the laser scan data coming on the /m2wr/laser/scan topic. Making the script executable:
+
+```sh
+$ cd ~/catkin_ws/src/motion_plan/scripts/ 
+
+$ chmod +x reading_laser.py
+```
+
+To spawn our robot into the gazebo simulation write:
+
+```sh
+$ roslaunch m2wr_description spawn.launch 
+
+$ rosrun motion_plan reading_laser.py
+```
 
