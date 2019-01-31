@@ -63,3 +63,36 @@ We will modify the urdf file (m2wr.xacro) as follows:
 	4. Expand the LaserScan display by double clicking on its name and choose Topic as /m2wr/laser/scan
 
 * Then move the robot and rviz should mark the sensor detecting this objects.
+
+### [Part 4: Read the values of the laser scanner](http://www.theconstructsim.com/ros-projects-exploring-ros-using-2-wheeled-robot-part-1/#part4)
+
+We are going to read the values of the laser scanner and filter a small part to work with.
+
+* Clone the following repository, but just keep the 'my_worlds' folder:
+```sh
+$ cd simulation_ws/src
+
+$ git clone https://marcoarruda@bitbucket.org/theconstructcore/two-wheeled-robot-simulation.git
+```
+
+The 'my_worlds' package consists of the following directories:
+
+	1.	launch : Contains a launch file.
+
+	2.	worlds : Contains multiple world description files.
+
+Create a new catkin package named ```motion_plan``` with dependencies ```rospy```, ```std_msgs```, ```geometry_msgs``` and ```sensor_msgs```. Write the following commands:
+
+```sh
+$ cd ~/catkin_ws/src 
+
+$ catkin_create_pgk motion_plan rospy std_msgs geometry_msgs sensor_msgs 
+
+$ cd motion_plan 
+
+$ mkdir scripts 
+
+$ touch scripts/reading_laser.py
+```
+
+
